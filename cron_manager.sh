@@ -4,7 +4,7 @@ while true; do
     echo
     echo "Current crontab jobs:"
     echo "---------------------"
-    crontab -l | nl
+    crontab -l | nl -ba
     echo "---------------------"
     echo
 
@@ -39,15 +39,29 @@ while true; do
             # Remove line(s) from the crontab
             echo "Enter the line number(s) to remove (separated by spaces):"
             read -a line_numbers
-            crontab -l | sed "${line_numbers[@]/#/d;}" | crontab -
-            echo "Selected cron jobs removed."
+            if [ -z "${line_numbers}" ]; then
+                echo "No line numbers entered. Nothing to remove."
+            else
+                temp_crontab=$(mktemp)
+                crontab -l | sed "$(printf '%sd;' "${line_numbers[@]}")" > "$temp_crontab"
+                crontab "$temp_crontab"
+                rm "$temp_crontab"
+                echo "Selected cron jobs removed."
+            fi
             ;;
         3)
             # Comment out line(s) in the crontab
             echo "Enter the line number(s) to comment out (separated by spaces):"
             read -a line_numbers
-            crontab -l | sed "${line_numbers[@]/#/s/^/#/}" | crontab -
-            echo "Selected cron jobs commented out."
+            if [ -z "${line_numbers}" ]; then
+                echo "No line numbers entered. Nothing to comment out."
+            else
+                temp_crontab=$(mktemp)
+                crontab -l | sed "$(printf '%ss/^/#/' "${line_numbers[@]}")" > "$temp_crontab"
+                crontab "$temp_crontab"
+                rm "$temp_crontab"
+                echo "Selected cron jobs commented out."
+            fi
             ;;
         4)
             # Exit the program
