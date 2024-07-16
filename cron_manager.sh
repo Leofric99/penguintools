@@ -57,10 +57,21 @@ while true; do
                 echo "No line numbers entered. Nothing to comment out."
             else
                 temp_crontab=$(mktemp)
-                crontab -l | sed "$(printf '%ss/^/#/' "${line_numbers[@]}")" > "$temp_crontab"
+                crontab -l | {
+                    current_cron_jobs=$(cat)
+                    for line_number in "${line_numbers[@]}"; do
+                        line=$(echo "$current_cron_jobs" | sed -n "${line_number}p")
+                        if [[ $line == \#* ]]; then
+                            echo "Line $line_number is already commented out."
+                        else
+                            current_cron_jobs=$(echo "$current_cron_jobs" | sed "${line_number}s/^/#/")
+                            echo "Line $line_number commented out."
+                        fi
+                    done
+                    echo "$current_cron_jobs" > "$temp_crontab"
+                }
                 crontab "$temp_crontab"
                 rm "$temp_crontab"
-                echo "Selected cron jobs commented out."
             fi
             ;;
         4)
