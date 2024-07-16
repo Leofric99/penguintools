@@ -6,10 +6,11 @@ while true; do
     echo "Menu:"
     echo
     echo "------------------------------------"
-    echo "1. Display the output of lsblk"
-    echo "2. Mount a drive to a directory"
-    echo "3. Unmount a drive from a directory"
-    echo "4. Exit"
+    echo "1. Run the lsblk command"
+    echo "2. Run the ls command on a target directory"
+    echo "3. Mount a drive to a directory"
+    echo "4. Unmount a drive from a directory"
+    echo "5. Exit"
     echo "------------------------------------"
     echo
 
@@ -19,12 +20,24 @@ while true; do
 
     case $choice in
         1)
-            echo "Output of lsblk:"
+            read -p "Enter any arguments for lsblk (leave blank for none): " args
+            echo "Output of lsblk ${args:-}:"
             echo
-            lsblk || echo "Error: Failed to run lsblk."
+            lsblk ${args:-} || echo "Error: Failed to run lsblk."
             ;;
         2)
-            read -p "Enter the drive/device path to mount: " drive_path
+            read -p "Enter the directory to run ls on: " dir
+            read -p "Enter any arguments for the ls command (leave blank for none): " args
+            if [ -d "$dir" ]; then
+                echo "Output of ls ${args:-} $dir:"
+                echo
+                ls ${args:-} $dir || echo "Error: Failed to run ls on $dir."
+            else
+                echo "Error: Directory $dir does not exist."
+            fi
+            ;;
+        3)
+            read -p "Enter the drive/device path: " drive_path
             read -p "Enter the directory to mount to: " mount_point
             if [ -b "$drive_path" ]; then
                 if [ -d "$mount_point" ]; then
@@ -41,7 +54,7 @@ while true; do
                 echo "Error: Device $drive_path does not exist."
             fi
             ;;
-        3)
+        4)
             read -p "Enter the directory to unmount: " mount_point
             if mountpoint -q $mount_point; then
                 sudo umount $mount_point
@@ -54,12 +67,12 @@ while true; do
                 echo "Error: $mount_point is not a mount point."
             fi
             ;;
-        4)
+        5)
             echo "Exiting..."
             break
             ;;
         *)
-            echo "Invalid option. Please enter a number from 1 to 4."
+            echo "Invalid option. Please enter a number from 1 to 5."
             ;;
     esac
 
