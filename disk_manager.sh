@@ -5,13 +5,13 @@ while true; do
     echo
     echo "Menu:"
     echo
-    echo "------------------------------------"
+    echo "-------------------------------------"
     echo "1. Run the lsblk command"
     echo "2. Run the ls command on a target directory"
     echo "3. Mount a drive to a directory"
     echo "4. Unmount a drive from a directory"
     echo "5. Exit"
-    echo "------------------------------------"
+    echo "-------------------------------------"
     echo
 
     # Ask the user to choose an option
