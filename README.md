@@ -22,7 +22,7 @@ disk_manager.sh manages the user's disks. It begins by presenting the user with 
 3. Unmount a drive from the directory
 4. Exit the program
 
-## file_manger.sh
+### file_manger.sh
 
 file_manager.sh can move, copy, and rename files as well as mirroring one directory to another (for backup purposes).
 
