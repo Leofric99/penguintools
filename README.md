@@ -35,6 +35,10 @@ The script will provide a number of options:
 5. Run the ls command on a directory
 6. Exit
 
+### datafile_converter.sh
+
+This file converts json files to csv files, and vice virsa. Simply run the script, and when prompted, specify the file or filepath of either a csv or json file and it will convert it to the alternative.
+
 ## Installation
 
-There are no dependancies for these tools, only a linux instance. To get started, clone the repository into a desired folder and run the various `.sh` files.
+There are no dependancies for most of these tools, only a linux instance. The only tool that requires js and csvtoolkit is `datafile_converter.sh` To get started, clone the repository into a desired folder and run the various `.sh` files.
