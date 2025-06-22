@@ -39,6 +39,21 @@ The script will provide a number of options:
 
 This file converts json files to csv files, and vice virsa. Simply run the script, and when prompted, specify the file or filepath of either a csv or json file and it will convert it to the alternative.
 
+### git_manager.sh
+
+git_manager.sh provides a simple menu-driven interface for common GitHub repository tasks. The options are:
+
+1. Clone a repository and link with GitHub ready for pushing
+2. Pull changes to a GitHub repository
+3. Commit changes to a GitHub repository
+4. Push changes to a GitHub repository
+5. Generate SSH Keys for GitHub Authentication
+6. Quit
+
+### treesize.sh
+
+treesize.sh is a terminal-based storage usage viewer. It displays the size of folders and files in the current directory, color-coding the largest items. You can browse directories, page through results, and quickly identify space hogs.
+
 ## Installation
 
 There are no dependancies for most of these tools, only a linux instance. The only tool that requires js and csvtoolkit is `datafile_converter.sh` To get started, clone the repository into a desired folder and run the various `.sh` files.
